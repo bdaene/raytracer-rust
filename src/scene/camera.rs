@@ -77,12 +77,12 @@ mod test {
             Camera {
                 position: Point::from_xyz(0., 0., 1.5),
                 target: Point::from_xyz(8., 0., 1.5),
-                up: Point::from_xyz(0., 0., 0.04),
-                left: Point::from_xyz(0., 0.04, 0.),
+                up: Point::from_xyz(0., 0., 0.02),
+                left: Point::from_xyz(0., 0.02, 0.),
 
-                screen_origin: Point::from_xyz(8., -8., 1.5 - 4.5),
-                screen_horizontal: Point::from_xyz(0., 16., 0.),
-                screen_vertical: Point::from_xyz(0., 0., 9.),
+                screen_origin: Point::from_xyz(8., 8., 1.5 + 4.5),
+                screen_horizontal: Point::from_xyz(0., -16., 0.),
+                screen_vertical: Point::from_xyz(0., 0., -9.),
             }
         )
     }
@@ -107,8 +107,8 @@ mod test {
         assert_eq!(
             camera.get_ray((-1., 1.), (0.25, 0.75)),
             Ray {
-                origin: Point::from_xyz(0., -0.04, 1.5 + 0.04),
-                direction: Point::from_xyz(8., 16. / 4. + 0.04, -9. / 4. - 0.04),
+                origin: Point::from_xyz(0., -0.02, 1.5 + 0.02),
+                direction: Point::from_xyz(8., 16. / 4. + 0.02, -9. / 4. - 0.02),
             }
         );
     }

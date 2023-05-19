@@ -1,7 +1,7 @@
 use std::iter::zip;
 use std::ops;
 
-use super::is_close;
+use approx::relative_eq;
 
 pub const DIMENSIONS: usize = 3;
 
@@ -127,7 +127,7 @@ impl ops::Neg for Point {
 
 impl PartialEq for Point {
     fn eq(&self, other: &Self) -> bool {
-        zip(self.coord, other.coord).all(|(x1, x2)| is_close(x1, x2))
+        zip(self.coord, other.coord).all(|(x1, x2)| relative_eq!(x1, x2))
     }
 
     fn ne(&self, other: &Self) -> bool {

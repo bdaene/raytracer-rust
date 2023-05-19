@@ -3,6 +3,7 @@ pub mod materials;
 pub mod shapes;
 
 use materials::Material;
+use palette::LinSrgb;
 use shapes::Shape;
 
 use self::camera::Camera;
@@ -15,4 +16,5 @@ pub struct Object {
 pub struct Scene {
     pub camera: Camera,
     pub objects: Vec<Object>,
+    pub background: LinSrgb,
 }

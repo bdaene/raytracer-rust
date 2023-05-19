@@ -1,23 +1,17 @@
 use crate::pixels::Pixels;
 use crate::scene::Scene;
-use crate::utils::color::Color;
 use crate::utils::random;
+use palette::LinSrgb;
 
 pub struct Renderer {
     pub rays_per_pixel: usize,
 }
 
-const BACKGROUND_COLOR: Color = Color {
-    red: 0.5,
-    green: 0.7,
-    blue: 1.,
-};
-
 impl Renderer {
     pub fn render(&self, scene: &Scene, pixels: &mut Pixels) {
         for row in 0..pixels.height {
             for col in 0..pixels.width {
-                let mut color = Color::default();
+                let mut color = LinSrgb::default();
                 for _ in 0..self.rays_per_pixel {
                     let pixel_offset = random::get_random_2d();
                     let lens_offset = random::get_random_in_disk();
@@ -39,10 +33,14 @@ impl Renderer {
                     {
                         object.material.get_color()
                     } else {
-                        BACKGROUND_COLOR
+                        scene.background
                     }
                 }
-                pixels.set_color(row, col, color / self.rays_per_pixel as f64);
+                color.red /= self.rays_per_pixel as f32;
+                color.green /= self.rays_per_pixel as f32;
+                color.blue /= self.rays_per_pixel as f32;
+
+                pixels.set_color(row, col, color);
             }
         }
     }

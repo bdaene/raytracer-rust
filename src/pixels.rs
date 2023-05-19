@@ -1,4 +1,4 @@
-use crate::utils::color::Color;
+use palette::{LinSrgb, Srgb};
 use std::fs::{create_dir_all, File};
 use std::io;
 use std::path::Path;
@@ -21,12 +21,13 @@ impl Pixels {
         }
     }
 
-    pub fn set_color(&mut self, row: usize, col: usize, color: Color) {
+    pub fn set_color(&mut self, row: usize, col: usize, color: LinSrgb) {
         let offset = (self.width * row + col) * DEPTH;
+        let color = Srgb::from_linear(color);
 
-        self.pixels[offset] = (color.red.clamp(0., 1.) * 255.) as u8;
-        self.pixels[offset + 1] = (color.green.clamp(0., 1.) * 255.) as u8;
-        self.pixels[offset + 2] = (color.blue.clamp(0., 1.) * 255.) as u8;
+        self.pixels[offset] = color.red;
+        self.pixels[offset + 1] = color.green;
+        self.pixels[offset + 2] = color.blue;
     }
 
     pub fn save(&self, path: &Path) -> io::Result<()> {
@@ -83,20 +84,20 @@ mod test {
             pixels.set_color(
                 0,
                 col,
-                Color {
-                    red: if col == 1 { 1. } else { 0. },
-                    green: if col == 2 { 1. } else { 0. },
-                    blue: if col == 3 { 1. } else { 0. },
-                },
+                LinSrgb::new(
+                    if col == 1 { 1. } else { 0. },
+                    if col == 2 { 1. } else { 0. },
+                    if col == 3 { 1. } else { 0. },
+                ),
             );
             pixels.set_color(
                 1,
                 col,
-                Color {
-                    red: if col != 1 { 1. } else { 0. },
-                    green: if col != 2 { 1. } else { 0. },
-                    blue: if col != 3 { 1. } else { 0. },
-                },
+                LinSrgb::new(
+                    if col != 1 { 1. } else { 0. },
+                    if col != 2 { 1. } else { 0. },
+                    if col != 3 { 1. } else { 0. },
+                ),
             );
         }
 
