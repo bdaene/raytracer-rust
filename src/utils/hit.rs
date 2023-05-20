@@ -1,9 +1,9 @@
-use crate::scene::object::materials::Material;
+use crate::scene::object::Object;
 use crate::utils::ray::Ray;
 
-pub struct Hit<'material> {
+pub struct Hit<'object> {
+    pub object: &'object Object,
     pub t: f64,
-    pub material: &'material Box<dyn Material>,
 }
 
 pub trait Hittable {
