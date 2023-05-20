@@ -1,4 +1,4 @@
-use crate::utils::hit::{Hit, Hittable};
+use super::ShapeHit;
 use crate::utils::point::Point;
 use crate::utils::ray::Ray;
 
@@ -16,10 +16,8 @@ impl Sphere {
     }
 }
 
-impl Shape for Sphere {}
-
-impl Hittable for Sphere {
-    fn hit(&self, ray: Ray, t_min: f64, t_max: f64) -> Option<Hit> {
+impl Shape for Sphere {
+    fn hit(&self, ray: Ray, t_min: f64, t_max: f64) -> Option<ShapeHit> {
         // ray
         let center_origin = self.position - ray.origin;
         let direction = ray.direction;
@@ -37,7 +35,7 @@ impl Hittable for Sphere {
             .iter()
             {
                 if t_min < t && t < t_max {
-                    return Some(Hit { t });
+                    return Some(ShapeHit { t });
                 }
             }
         }

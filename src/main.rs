@@ -4,17 +4,15 @@ use palette::Srgb;
 use raytracer_rust::pixels::Pixels;
 use raytracer_rust::renderer::Renderer;
 use raytracer_rust::scene::camera::Camera;
-use raytracer_rust::scene::materials::Uniform;
-use raytracer_rust::scene::shapes::sphere::Sphere;
-use raytracer_rust::scene::Object;
+use raytracer_rust::scene::object::materials::Uniform;
+use raytracer_rust::scene::object::shapes::sphere::Sphere;
+use raytracer_rust::scene::object::Object;
 use raytracer_rust::scene::Scene;
 use raytracer_rust::utils::point::Point;
 
 fn main() {
     let mut pixels = Pixels::new(1600, 900);
-    let renderer = Renderer {
-        rays_per_pixel: 128,
-    };
+    let renderer = Renderer::default();
 
     let x_offset = (std::f64::consts::PI / 3.0).sin();
 
