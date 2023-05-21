@@ -2,10 +2,11 @@ use std::iter::zip;
 use std::ops;
 
 use approx::relative_eq;
+use serde::{Deserialize, Serialize};
 
 pub const DIMENSIONS: usize = 3;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, Serialize, Deserialize)]
 pub struct Point {
     pub coord: [f64; DIMENSIONS],
 }

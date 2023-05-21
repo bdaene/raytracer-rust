@@ -7,7 +7,9 @@ use crate::utils::hit::{Hit, Hittable};
 use crate::utils::ray::Ray;
 
 use self::materials::Materials;
+use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Object {
     pub shape: Shapes,
     pub material: Materials,

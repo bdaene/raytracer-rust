@@ -1,7 +1,9 @@
 use crate::utils::point::Point;
 use crate::utils::ray::Ray;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
+#[serde(from = "CameraConfig", into = "CameraConfig")]
 pub struct Camera {
     position: Point,
     target: Point,
@@ -11,6 +13,44 @@ pub struct Camera {
     screen_origin: Point,
     screen_horizontal: Point,
     screen_vertical: Point,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct CameraConfig {
+    position: Point,
+    target: Point,
+
+    field_of_view: f64,
+    aspect_ratio: f64,
+    aperture: f64,
+}
+
+impl From<Camera> for CameraConfig {
+    fn from(camera: Camera) -> CameraConfig {
+        let screen_width = camera.screen_horizontal.norm();
+        let screen_height = camera.screen_vertical.norm();
+        let depth_of_field = (camera.target - camera.position).norm();
+
+        CameraConfig {
+            position: camera.position,
+            target: camera.target,
+            field_of_view: (screen_width / depth_of_field / 2.).atan().to_degrees() * 2.,
+            aspect_ratio: screen_width / screen_height,
+            aperture: camera.up.norm() * 2.,
+        }
+    }
+}
+
+impl From<CameraConfig> for Camera {
+    fn from(config: CameraConfig) -> Camera {
+        Camera::new(
+            config.position,
+            config.target,
+            config.field_of_view,
+            config.aspect_ratio,
+            config.aperture,
+        )
+    }
 }
 
 impl Camera {

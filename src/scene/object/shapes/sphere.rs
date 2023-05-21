@@ -1,19 +1,14 @@
 use super::ShapeHit;
 use crate::utils::point::Point;
 use crate::utils::ray::Ray;
+use serde::{Deserialize, Serialize};
 
 use super::Shape;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Sphere {
-    position: Point,
-    radius: f64,
-}
-
-impl Sphere {
-    pub fn new(position: Point, radius: f64) -> Sphere {
-        Sphere { position, radius }
-    }
+    pub position: Point,
+    pub radius: f64,
 }
 
 impl Shape for Sphere {
