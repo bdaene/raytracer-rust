@@ -5,11 +5,9 @@ use palette::{LinSrgb, Srgb};
 
 use crate::utils::hit::{Hit, Hittable};
 use crate::utils::ray::Ray;
+use camera::Camera;
 use object::Object;
-
-use self::camera::Camera;
 use serde::{Deserialize, Serialize};
-use serde_with::serde_as;
 
 serde_with::serde_conv!(
     LinSrgbAsArray,
@@ -29,9 +27,7 @@ serde_with::serde_conv!(
 pub struct Scene {
     pub camera: Camera,
     pub objects: Vec<Object>,
-
-    #[serde_as(as = "LinSrgbAsArray")]
-    pub background: LinSrgb,
+    pub sky: Object,
 }
 
 impl Hittable for Scene {
@@ -40,7 +36,7 @@ impl Hittable for Scene {
         let mut closest_hit = None;
         for object in self.objects.iter() {
             if let Some(hit) = object.hit(ray, t_min, t_max) {
-                t_max = hit.t;
+                t_max = hit.shape_hit.t;
                 closest_hit = Some(hit);
             }
         }

@@ -36,13 +36,10 @@ impl Renderer {
             })
             .collect();
         let start = Instant::now();
-        print!("Computing {} tiles ", tiles.len());
+        println!("Computing {} tiles ", tiles.len());
         let pixels: Vec<(usize, usize, LinSrgb)> = tiles
             .into_par_iter()
             .flat_map(|(row, col)| {
-                if col == 0 {
-                    print!(".")
-                }
                 self.render_tile(
                     scene,
                     (width, height),
@@ -54,7 +51,7 @@ impl Renderer {
                 )
             })
             .collect();
-        println!("done in {:?}.", start.elapsed());
+        println!("Done in {:?}.", start.elapsed());
 
         for (row, col, color) in pixels {
             let color = Srgb::<u8>::from_linear(color);
@@ -104,9 +101,10 @@ impl Renderer {
             let ray = scene.camera.get_ray(lens_offset, (u, v));
 
             color += if let Some(hit) = scene.hit(ray, 0., f64::INFINITY) {
-                hit.object.material.get_color()
+                hit.object.material.get_color(hit)
             } else {
-                scene.background
+                let hit = scene.sky.hit(ray, 0., f64::INFINITY).unwrap();
+                scene.sky.material.get_color(hit)
             };
         }
         color.red /= self.rays_per_pixel as f32;

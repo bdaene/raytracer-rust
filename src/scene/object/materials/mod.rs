@@ -1,22 +1,27 @@
+pub mod texture;
 pub mod uniform;
 
-use self::uniform::Uniform;
+use crate::utils::hit::Hit;
 use palette::LinSrgb;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use texture::Texture;
+use uniform::Uniform;
 
 pub trait Material {
-    fn get_color(&self) -> LinSrgb;
+    fn get_color(&self, hit: Hit) -> LinSrgb;
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Materials {
     Uniform(Uniform),
+    Texture(Texture),
 }
 
 impl Material for Materials {
-    fn get_color(&self) -> LinSrgb {
+    fn get_color(&self, hit: Hit) -> LinSrgb {
         match self {
-            Materials::Uniform(uniform) => uniform.get_color(),
+            Materials::Uniform(uniform) => uniform.get_color(hit),
+            Materials::Texture(texture) => texture.get_color(hit),
         }
     }
 }

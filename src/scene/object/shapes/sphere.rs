@@ -1,9 +1,8 @@
-use super::ShapeHit;
+use super::{Shape, ShapeHit};
 use crate::utils::point::Point;
 use crate::utils::ray::Ray;
 use serde::{Deserialize, Serialize};
-
-use super::Shape;
+use std::f64::consts::{PI, TAU};
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Sphere {
@@ -30,7 +29,17 @@ impl Shape for Sphere {
             .iter()
             {
                 if t_min < t && t < t_max {
-                    return Some(ShapeHit { t });
+                    let position = ray.at_t(t);
+                    let normal = (position - self.position).normalized();
+                    let u = 0.5 + normal.y().atan2(normal.x()) / TAU;
+                    let v = 0.5 - normal.z().asin() / PI;
+                    return Some(ShapeHit {
+                        t,
+                        position,
+                        normal,
+                        u,
+                        v,
+                    });
                 }
             }
         }

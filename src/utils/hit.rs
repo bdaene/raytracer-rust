@@ -1,9 +1,10 @@
 use crate::scene::object::Object;
+use crate::scene::object::shapes::ShapeHit;
 use crate::utils::ray::Ray;
 
 pub struct Hit<'object> {
     pub object: &'object Object,
-    pub t: f64,
+    pub shape_hit: ShapeHit,
 }
 
 pub trait Hittable {

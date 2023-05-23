@@ -20,7 +20,7 @@ impl Hittable for Object {
         if let Some(shape_hit) = self.shape.hit(ray, t_min, t_max) {
             Some(Hit {
                 object: self,
-                t: shape_hit.t,
+                shape_hit,
             })
         } else {
             None

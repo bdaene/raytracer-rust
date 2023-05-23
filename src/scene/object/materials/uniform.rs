@@ -1,5 +1,6 @@
 use super::Material;
 use crate::scene::LinSrgbAsArray;
+use crate::utils::hit::Hit;
 use palette::LinSrgb;
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
@@ -12,7 +13,7 @@ pub struct Uniform {
 }
 
 impl Material for Uniform {
-    fn get_color(&self) -> LinSrgb {
+    fn get_color(&self, _hit: Hit) -> LinSrgb {
         self.color
     }
 }

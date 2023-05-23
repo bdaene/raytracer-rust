@@ -10,7 +10,7 @@ fn main() {
     let scene_file = File::open("data/scene.json").unwrap();
     let scene: Scene = serde_json::from_reader(scene_file).unwrap();
 
-    let mut screen = RgbImage::new(16 * 20, 9 * 20);
+    let mut screen = RgbImage::new(1600, 800);
     Renderer::default().render(&scene, &mut screen);
 
     screen.save(Path::new("tmp/scene.png")).unwrap();
