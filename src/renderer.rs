@@ -100,12 +100,9 @@ impl Renderer {
             let lens_offset = random::get_random_in_disk();
             let ray = scene.camera.get_ray(lens_offset, (u, v));
 
-            color += if let Some(hit) = scene.hit(ray, 0., f64::INFINITY) {
-                hit.object.material.get_color(hit)
-            } else {
-                let hit = scene.sky.hit(ray, 0., f64::INFINITY).unwrap();
-                scene.sky.material.get_color(hit)
-            };
+            if let Some(hit) = scene.hit(ray, 0., f64::INFINITY) {
+                color += hit.object.material.get_color(hit);
+            }
         }
         color.red /= self.rays_per_pixel as f32;
         color.green /= self.rays_per_pixel as f32;

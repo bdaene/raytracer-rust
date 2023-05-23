@@ -21,6 +21,16 @@
     "objects": [
         {
             "shape": {
+                "Sky": {}
+            },
+            "material": {
+                "Texture": {
+                    "texture": "data/skybox.jpg"
+                }
+            }
+        },
+        {
+            "shape": {
                 "Sphere": {
                     "position": {
                         "coord": [
@@ -180,15 +190,5 @@
                 }
             }
         }
-    ],
-    "sky": {
-        "shape": {
-            "Sky": {}
-        },
-        "material": {
-            "Texture": {
-                "texture": "data/skybox.jpg"
-            }
-        }
-    }
+    ]
 }

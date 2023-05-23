@@ -27,7 +27,6 @@ serde_with::serde_conv!(
 pub struct Scene {
     pub camera: Camera,
     pub objects: Vec<Object>,
-    pub sky: Object,
 }
 
 impl Hittable for Scene {
