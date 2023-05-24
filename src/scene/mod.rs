@@ -35,7 +35,7 @@ impl Hittable for Scene {
         let mut closest_hit = None;
         for object in self.objects.iter() {
             if let Some(hit) = object.hit(ray, t_min, t_max) {
-                t_max = hit.shape_hit.t;
+                t_max = hit.t;
                 closest_hit = Some(hit);
             }
         }

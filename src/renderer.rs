@@ -1,9 +1,11 @@
 use std::time::Instant;
 
-use crate::scene::object::materials::Material;
+use crate::scene::object::materials::Materials;
+use crate::scene::object::shapes::TOLERANCE;
 use crate::scene::Scene;
-use crate::utils::hit::Hittable;
+use crate::utils::hit::{HitInfo, Hittable};
 use crate::utils::random;
+use crate::utils::ray::Ray;
 use image::{Rgb, RgbImage};
 use palette::{LinSrgb, Srgb};
 use rayon::prelude::*;
@@ -11,13 +13,15 @@ use rayon::prelude::*;
 pub struct Renderer {
     pub rays_per_pixel: usize,
     pub tile_size: usize,
+    pub max_bounces: usize,
 }
 
 impl Default for Renderer {
     fn default() -> Renderer {
         Renderer {
-            rays_per_pixel: 64,
+            rays_per_pixel: 256,
             tile_size: 16,
+            max_bounces: 16,
         }
     }
 }
@@ -100,14 +104,33 @@ impl Renderer {
             let lens_offset = random::get_random_in_disk();
             let ray = scene.camera.get_ray(lens_offset, (u, v));
 
-            if let Some(hit) = scene.hit(ray, 0., f64::INFINITY) {
-                color += hit.object.material.get_color(hit);
-            }
+            color += self.render_ray(scene, ray);
         }
         color.red /= self.rays_per_pixel as f32;
         color.green /= self.rays_per_pixel as f32;
         color.blue /= self.rays_per_pixel as f32;
 
+        color
+    }
+
+    fn render_ray(&self, scene: &Scene, ray: Ray) -> LinSrgb {
+        let mut ray = ray;
+        let mut albedo = LinSrgb::new(1., 1., 1.);
+        let mut color = LinSrgb::default();
+        for _ in 0..self.max_bounces {
+            if let Some(hit) = scene.hit(ray, TOLERANCE, f64::INFINITY) {
+                let hit_info = HitInfo::from(hit);
+                albedo *= hit_info.color;
+                if let Materials::Light(_) = hit_info.hit.object.material {
+                    color += albedo
+                }
+                if let Some(next_ray) = hit_info.next_ray {
+                    ray = next_ray;
+                } else {
+                    return color;
+                }
+            }
+        }
         color
     }
 }

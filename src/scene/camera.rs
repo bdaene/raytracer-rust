@@ -1,6 +1,7 @@
-use crate::utils::point::Point;
+use crate::utils::point::{Point, PointAsArray};
 use crate::utils::ray::Ray;
 use serde::{Deserialize, Serialize};
+use serde_with::serde_as;
 
 #[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 #[serde(from = "CameraConfig", into = "CameraConfig")]
@@ -15,10 +16,15 @@ pub struct Camera {
     screen_vertical: Point,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[serde_with::serde_as]
+#[derive(Serialize, Deserialize)]
 pub struct CameraConfig {
+    #[serde_as(as = "PointAsArray")]
     position: Point,
+    #[serde_as(as = "PointAsArray")]
     target: Point,
+    #[serde_as(as = "PointAsArray")]
+    up: Point,
 
     field_of_view: f64,
     aspect_ratio: f64,
@@ -34,6 +40,7 @@ impl From<Camera> for CameraConfig {
         CameraConfig {
             position: camera.position,
             target: camera.target,
+            up: camera.up,
             field_of_view: (screen_width / depth_of_field / 2.).atan().to_degrees() * 2.,
             aspect_ratio: screen_width / screen_height,
             aperture: camera.up.norm() * 2.,
@@ -46,6 +53,7 @@ impl From<CameraConfig> for Camera {
         Camera::new(
             config.position,
             config.target,
+            config.up,
             config.field_of_view,
             config.aspect_ratio,
             config.aperture,
@@ -57,13 +65,13 @@ impl Camera {
     pub fn new(
         position: Point,
         target: Point,
+        up: Point,
         field_of_view: f64,
         aspect_ratio: f64,
         aperture: f64,
     ) -> Camera {
-        let vertical = Point::from_xyz(0., 0., 1.);
         let to_target = (target - position).normalized();
-        let left = vertical.cross(&to_target).normalized();
+        let left = up.cross(&to_target).normalized();
         let up = to_target.cross(&left).normalized();
 
         let depth_of_field = (target - position).norm();
@@ -110,6 +118,7 @@ mod test {
             Camera::new(
                 Point::from_xyz(0., 0., 1.5),
                 Point::from_xyz(8., 0., 1.5),
+                Point::from_xyz(0., 0., 1.),
                 90.,
                 16. / 9.,
                 0.04
@@ -132,6 +141,7 @@ mod test {
         let camera = Camera::new(
             Point::from_xyz(0., 0., 1.5),
             Point::from_xyz(8., 0., 1.5),
+            Point::from_xyz(0., 0., 1.),
             90.,
             16. / 9.,
             0.04,

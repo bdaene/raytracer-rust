@@ -1,22 +1,23 @@
 {
     "camera": {
-        "position": {
-            "coord": [
-                -5.0,
-                0.0,
-                2.5
-            ]
-        },
-        "target": {
-            "coord": [
-                0.0,
-                0.0,
-                1.5
-            ]
-        },
-        "field_of_view": 120,
+        "position": [
+            -5.0,
+            0.0,
+            1.5
+        ],
+        "target": [
+            0.0,
+            0.0,
+            0.5
+        ],
+        "up": [
+            0.0,
+            0.0,
+            1.0
+        ],
+        "field_of_view": 90,
         "aspect_ratio": 2.0,
-        "aperture": 0.05
+        "aperture": 0.1
     },
     "objects": [
         {
@@ -24,169 +25,220 @@
                 "Sky": {}
             },
             "material": {
-                "Texture": {
-                    "texture": "data/skybox.jpg"
+                "Light": {
+                    "color": {
+                        "Texture": {
+                            "texture": "data/skybox.jpg"
+                        }
+                    }
                 }
             }
         },
         {
             "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            0.0,
-                            0.0,
-                            1.5
-                        ]
-                    },
-                    "radius": 0.5
-                }
-            },
-            "material": {
-                "Uniform": {
-                    "color": [
-                        0.5,
-                        0.5,
-                        0.5
-                    ]
-                }
-            }
-        },
-        {
-            "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            0.0,
-                            1.0,
-                            1.5
-                        ]
-                    },
-                    "radius": 0.5
-                }
-            },
-            "material": {
-                "Uniform": {
-                    "color": [
-                        0.99999994,
+                "HalfSpace": {
+                    "position": [
                         0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "normal": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "u": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "v": [
+                        0.0,
+                        1.0,
                         0.0
                     ]
                 }
+            },
+            "material": {
+                "Metal": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.7,
+                                0.7,
+                                0.9
+                            ]
+                        }
+                    }
+                }
             }
         },
         {
             "shape": {
                 "Sphere": {
-                    "position": {
-                        "coord": [
-                            -0.8660254037844386,
-                            0.5,
-                            1.5
-                        ]
-                    },
+                    "position": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
                     "radius": 0.5
                 }
             },
             "material": {
-                "Uniform": {
-                    "color": [
+                "Metal": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.8,
+                                0.8,
+                                0.8
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        0.0,
+                        1.0,
+                        1.0
+                    ],
+                    "radius": 0.5
+                }
+            },
+            "material": {
+                "Light": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                1.0,
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        -0.8660254037844386,
                         0.5,
+                        1.0
+                    ],
+                    "radius": 0.5
+                }
+            },
+            "material": {
+                "Light": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.5,
+                                0.5,
+                                0.0
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        -0.8660254037844386,
+                        -0.5,
+                        1.0
+                    ],
+                    "radius": 0.5
+                }
+            },
+            "material": {
+                "Light": {
+                    "color": {
+                        "Normals": {}
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        0.0,
+                        -1.0,
+                        1.0
+                    ],
+                    "radius": 0.5
+                }
+            },
+            "material": {
+                "Light": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.0,
+                                0.5,
+                                0.5
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        0.8660254037844386,
+                        -0.5,
+                        1.0
+                    ],
+                    "radius": 0.5
+                }
+            },
+            "material": {
+                "Light": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.0,
+                                0.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "shape": {
+                "Sphere": {
+                    "position": [
+                        0.8660254037844386,
                         0.5,
-                        0.0
-                    ]
-                }
-            }
-        },
-        {
-            "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            -0.8660254037844386,
-                            -0.5,
-                            1.5
-                        ]
-                    },
+                        1.0
+                    ],
                     "radius": 0.5
                 }
             },
             "material": {
-                "Uniform": {
-                    "color": [
-                        0.0,
-                        0.99999994,
-                        0.0
-                    ]
-                }
-            }
-        },
-        {
-            "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            0.0,
-                            -1.0,
-                            1.5
-                        ]
-                    },
-                    "radius": 0.5
-                }
-            },
-            "material": {
-                "Uniform": {
-                    "color": [
-                        0.0,
-                        0.5,
-                        0.5
-                    ]
-                }
-            }
-        },
-        {
-            "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            0.8660254037844386,
-                            -0.5,
-                            1.5
-                        ]
-                    },
-                    "radius": 0.5
-                }
-            },
-            "material": {
-                "Uniform": {
-                    "color": [
-                        0.0,
-                        0.0,
-                        0.99999994
-                    ]
-                }
-            }
-        },
-        {
-            "shape": {
-                "Sphere": {
-                    "position": {
-                        "coord": [
-                            0.8660254037844386,
-                            0.5,
-                            1.5
-                        ]
-                    },
-                    "radius": 0.5
-                }
-            },
-            "material": {
-                "Uniform": {
-                    "color": [
-                        0.5,
-                        0.0,
-                        0.5
-                    ]
+                "Light": {
+                    "color": {
+                        "Uniform": {
+                            "color": [
+                                0.5,
+                                0.0,
+                                0.5
+                            ]
+                        }
+                    }
                 }
             }
         }

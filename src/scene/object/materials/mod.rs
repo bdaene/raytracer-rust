@@ -1,27 +1,28 @@
-pub mod texture;
-pub mod uniform;
+pub mod light;
+pub mod metal;
 
-use crate::utils::hit::Hit;
+use crate::utils::hit::ShapeHit;
+use crate::utils::ray::Ray;
+use light::Light;
+use metal::Metal;
 use palette::LinSrgb;
 use serde::{Deserialize, Serialize};
-use texture::Texture;
-use uniform::Uniform;
 
 pub trait Material {
-    fn get_color(&self, hit: Hit) -> LinSrgb;
+    fn bounce_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>);
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Materials {
-    Uniform(Uniform),
-    Texture(Texture),
+    Metal(Metal),
+    Light(Light),
 }
 
 impl Material for Materials {
-    fn get_color(&self, hit: Hit) -> LinSrgb {
+    fn bounce_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
         match self {
-            Materials::Uniform(uniform) => uniform.get_color(hit),
-            Materials::Texture(texture) => texture.get_color(hit),
+            Materials::Metal(material) => material.bounce_ray(ray, t, shape_hit),
+            Materials::Light(material) => material.bounce_ray(ray, t, shape_hit),
         }
     }
 }

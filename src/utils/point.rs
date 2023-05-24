@@ -6,6 +6,13 @@ use serde::{Deserialize, Serialize};
 
 pub const DIMENSIONS: usize = 3;
 
+serde_with::serde_conv!(
+    pub PointAsArray,
+    Point,
+    |point: &Point| { point.coord },
+    |coord: [f64; 3]| -> Result<_, std::convert::Infallible> { Ok(Point { coord }) }
+);
+
 #[derive(Debug, Clone, Copy, Default, Serialize, Deserialize)]
 pub struct Point {
     pub coord: [f64; DIMENSIONS],
