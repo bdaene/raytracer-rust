@@ -27,10 +27,10 @@ impl Default for Renderer {
 }
 
 impl Renderer {
-    pub fn render(&self, scene: &Scene, screen: &mut RgbImage) {
-        let (width, height) = screen.dimensions();
-        // let (width, height) = (usize::try_from(width).unwrap(), usize::try_from(height).unwrap());
-        let (width, height) = (width as usize, height as usize);
+    pub fn render(&self, scene: &Scene) -> RgbImage {
+        let (width, height) = (scene.camera.screen_width, scene.camera.screen_height);
+        let mut screen = RgbImage::new(width as u32, height as u32);
+
         let tiles: Vec<(usize, usize)> = (0..height)
             .step_by(self.tile_size)
             .flat_map(|row| {
@@ -58,13 +58,15 @@ impl Renderer {
         println!("Done in {:?}.", start.elapsed());
 
         for (row, col, color) in pixels {
-            let color = Srgb::<u8>::from_linear(color);
+            let color = Srgb::<u8>::from_linear(color * scene.camera.exposure);
             screen.put_pixel(
                 col as u32,
                 row as u32,
                 Rgb([color.red, color.green, color.blue]),
             );
         }
+
+        screen
     }
 
     fn render_tile(

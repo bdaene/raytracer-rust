@@ -16,8 +16,10 @@
             1.0
         ],
         "field_of_view": 90,
-        "aspect_ratio": 2.0,
-        "aperture": 0.1
+        "aperture": 0.1,
+        "exposure": 0.5,
+        "screen_width": 1600,
+        "screen_height": 800
     },
     "objects": [
         {
@@ -97,7 +99,7 @@
                             ]
                         }
                     },
-                    "power": 20.0
+                    "power": 100.0
                 }
             }
         },
