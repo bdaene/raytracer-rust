@@ -19,7 +19,7 @@ pub struct Renderer {
 impl Default for Renderer {
     fn default() -> Renderer {
         Renderer {
-            rays_per_pixel: 256,
+            rays_per_pixel: 512,
             tile_size: 16,
             max_bounces: 16,
         }
