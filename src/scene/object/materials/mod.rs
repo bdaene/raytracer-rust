@@ -1,8 +1,10 @@
+pub mod diffuse;
 pub mod light;
 pub mod metal;
 
 use crate::utils::hit::ShapeHit;
 use crate::utils::ray::Ray;
+use diffuse::Diffuse;
 use light::Light;
 use metal::Metal;
 use palette::LinSrgb;
@@ -16,6 +18,7 @@ pub trait Material {
 pub enum Materials {
     Metal(Metal),
     Light(Light),
+    Diffuse(Diffuse),
 }
 
 impl Material for Materials {
@@ -23,6 +26,7 @@ impl Material for Materials {
         match self {
             Materials::Metal(material) => material.bounce_ray(ray, t, shape_hit),
             Materials::Light(material) => material.bounce_ray(ray, t, shape_hit),
+            Materials::Diffuse(material) => material.bounce_ray(ray, t, shape_hit),
         }
     }
 }
