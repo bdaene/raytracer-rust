@@ -30,7 +30,8 @@
                         "Texture": {
                             "texture": "data/skybox.jpg"
                         }
-                    }
+                    },
+                    "power": 1.0
                 }
             }
         },
@@ -90,12 +91,13 @@
                     "color": {
                         "Uniform": {
                             "color": [
-                                3.0,
-                                3.0,
-                                1.5
+                                1.0,
+                                1.0,
+                                0.5
                             ]
                         }
-                    }
+                    },
+                    "power": 20.0
                 }
             }
         },
@@ -191,7 +193,8 @@
                 "Light": {
                     "color": {
                         "Normals": {}
-                    }
+                    },
+                    "power": 0.5
                 }
             }
         },
