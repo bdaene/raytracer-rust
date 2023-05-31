@@ -7,6 +7,7 @@ use crate::utils::hit::{HitInfo, Hittable};
 use crate::utils::random;
 use crate::utils::ray::Ray;
 use image::{Rgb, RgbImage};
+use indicatif::ParallelProgressIterator;
 use palette::{LinSrgb, Srgb};
 use rayon::prelude::*;
 
@@ -40,9 +41,11 @@ impl Renderer {
             })
             .collect();
         let start = Instant::now();
-        println!("Computing {} tiles ", tiles.len());
+        let nb_tiles = tiles.len();
+        println!("Computing {nb_tiles} tiles...");
         let pixels: Vec<(usize, usize, LinSrgb)> = tiles
             .into_par_iter()
+            .progress_count(nb_tiles as u64)
             .flat_map(|(row, col)| {
                 self.render_tile(
                     scene,
