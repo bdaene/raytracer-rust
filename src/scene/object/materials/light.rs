@@ -12,7 +12,7 @@ pub struct Light {
 }
 
 impl Material for Light {
-    fn bounce_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
+    fn scatter_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
         let color = self.color.get_color(ray, t, shape_hit) * self.power;
         (color, None)
     }

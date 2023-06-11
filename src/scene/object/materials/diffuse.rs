@@ -1,8 +1,8 @@
 use super::Material;
-use crate::scene::object::colors::Color;
+use crate::scene::object::colors::{Color, Colors};
+use crate::utils::hit::ShapeHit;
 use crate::utils::random::get_random_on_sphere;
 use crate::utils::ray::Ray;
-use crate::{scene::object::colors::Colors, utils::hit::ShapeHit};
 use palette::LinSrgb;
 use serde::{Deserialize, Serialize};
 
@@ -12,7 +12,7 @@ pub struct Diffuse {
 }
 
 impl Material for Diffuse {
-    fn bounce_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
+    fn scatter_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
         let direction = shape_hit.normal + get_random_on_sphere();
 
         (

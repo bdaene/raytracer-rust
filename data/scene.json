@@ -3,7 +3,7 @@
         "position": [
             -5.0,
             0.0,
-            1.5
+            2.0
         ],
         "target": [
             0.0,
@@ -167,16 +167,8 @@
                 }
             },
             "material": {
-                "Diffuse": {
-                    "color": {
-                        "Uniform": {
-                            "color": [
-                                0.9,
-                                0.9,
-                                0.0
-                            ]
-                        }
-                    }
+                "Dielectric": {
+                    "refractive_index": 1.00029
                 }
             }
         },
@@ -184,19 +176,16 @@
             "shape": {
                 "Sphere": {
                     "position": [
-                        -0.8660254037844386,
-                        -0.5,
-                        1.0
+                        4.0,
+                        3.5,
+                        1.5
                     ],
-                    "radius": 0.5
+                    "radius": 1.5
                 }
             },
             "material": {
-                "Light": {
-                    "color": {
-                        "Normals": {}
-                    },
-                    "power": 0.5
+                "Dielectric": {
+                    "refractive_index": 1.5
                 }
             }
         },
@@ -212,16 +201,8 @@
                 }
             },
             "material": {
-                "Diffuse": {
-                    "color": {
-                        "Uniform": {
-                            "color": [
-                                0.0,
-                                0.9,
-                                0.9
-                            ]
-                        }
-                    }
+                "Dielectric": {
+                    "refractive_index": 2.4
                 }
             }
         },
@@ -237,16 +218,17 @@
                 }
             },
             "material": {
-                "Diffuse": {
+                "Light": {
                     "color": {
                         "Uniform": {
                             "color": [
-                                0.0,
-                                0.0,
+                                0.3,
+                                0.3,
                                 1.0
                             ]
                         }
-                    }
+                    },
+                    "power": 25.0
                 }
             }
         },

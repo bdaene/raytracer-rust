@@ -1,8 +1,8 @@
 use super::Material;
-use crate::scene::object::colors::Color;
+use crate::scene::object::colors::{Color, Colors};
+use crate::utils::hit::ShapeHit;
 use crate::utils::random::get_random_on_sphere;
 use crate::utils::ray::Ray;
-use crate::{scene::object::colors::Colors, utils::hit::ShapeHit};
 use palette::LinSrgb;
 use serde::{Deserialize, Serialize};
 
@@ -13,7 +13,7 @@ pub struct Metal {
 }
 
 impl Material for Metal {
-    fn bounce_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
+    fn scatter_ray(&self, ray: Ray, t: f64, shape_hit: &ShapeHit) -> (LinSrgb, Option<Ray>) {
         let mut direction = ray.direction;
         let color = self.color.get_color(ray, t, shape_hit);
         let mut total_color = LinSrgb::new(1., 1., 1.);

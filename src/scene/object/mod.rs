@@ -31,7 +31,7 @@ impl Hittable for Object {
 impl<'object> Object {
     pub fn get_hit_info(&self, hit: Hit<'object>) -> HitInfo<'object> {
         let shape_hit = self.shape.get_hit_info(hit.ray, hit.t);
-        let (color, next_ray) = self.material.bounce_ray(hit.ray, hit.t, &shape_hit);
+        let (color, next_ray) = self.material.scatter_ray(hit.ray, hit.t, &shape_hit);
 
         HitInfo {
             hit,
